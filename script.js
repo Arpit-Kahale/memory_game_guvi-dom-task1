@@ -1,96 +1,104 @@
-// select all cards
 let cards = document.getElementsByClassName("card");
-
-// restart button
 let restartBtn = document.getElementById("restart");
 
-// numbers for pairs
-let numbers = [1,2,3,4,1,2,3,4];
+let numbers = [1,2,3,4,5,6,1,2,3,4,5,6];
 
-// simple shuffle
-for(let i = 0; i < numbers.length; i++){
+// shuffle numbers
+for(let i=0;i<numbers.length;i++){
 
-    let randomIndex = Math.floor(Math.random() * numbers.length);
+let randomIndex = Math.floor(Math.random()*numbers.length);
 
-    let temp = numbers[i];
-    numbers[i] = numbers[randomIndex];
-    numbers[randomIndex] = temp;
+let temp = numbers[i];
+numbers[i] = numbers[randomIndex];
+numbers[randomIndex] = temp;
 
 }
 
-
-// variables
 let firstCard = null;
 let secondCard = null;
+let lockBoard = false;
 
 
-// assign numbers to cards
-for(let i = 0; i < cards.length; i++){
+// assign numbers
+for(let i=0;i<cards.length;i++){
 
-    cards[i].setAttribute("data-number", numbers[i]);
+cards[i].setAttribute("data-number",numbers[i]);
 
-    const backSide = cards[i].querySelector(".back");
-    backSide.innerHTML = numbers[i];
+let backSide = cards[i].querySelector(".back");
+backSide.innerHTML = numbers[i];
 
-    cards[i].addEventListener("click", flipCard);
+cards[i].addEventListener("click",flipCard);
 
 }
 
 
-
-// flip card
+// flip function
 function flipCard(){
 
-    this.classList.add("flip");
+if(lockBoard) return;
 
-    if(firstCard == null){
+if(this === firstCard) return;
 
-        firstCard = this;
+this.classList.add("flip");
 
-    }else{
+if(firstCard === null){
 
-        secondCard = this;
+firstCard = this;
 
-        checkMatch();
+}else{
 
-    }
+secondCard = this;
+lockBoard = true;
+
+checkMatch();
 
 }
 
+}
 
 
 // match check
 function checkMatch(){
 
-    let num1 = firstCard.getAttribute("data-number");
-    let num2 = secondCard.getAttribute("data-number");
+let num1 = firstCard.getAttribute("data-number");
+let num2 = secondCard.getAttribute("data-number");
 
-    if(num1 == num2){
+if(num1 === num2){
 
-        firstCard = null;
-        secondCard = null;
+firstCard.removeEventListener("click",flipCard);
+secondCard.removeEventListener("click",flipCard);
 
-    }else{
+resetBoard();
 
-        setTimeout(function(){
+}else{
 
-            firstCard.classList.remove("flip");
-            secondCard.classList.remove("flip");
+setTimeout(function(){
 
-            firstCard = null;
-            secondCard = null;
+firstCard.classList.remove("flip");
+secondCard.classList.remove("flip");
 
-        },1000);
+resetBoard();
 
-    }
+},1000);
+
+}
 
 }
 
 
+// reset
+function resetBoard(){
 
-// restart game
-restartBtn.addEventListener("click", function(){
+firstCard = null;
+secondCard = null;
+lockBoard = false;
 
-    location.reload();
+}
+
+
+// restart
+restartBtn.addEventListener("click",function(){
+
+location.reload();
 
 });

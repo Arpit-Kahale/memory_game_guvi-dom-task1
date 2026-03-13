@@ -15,9 +15,7 @@ align-items:center;
 background:white;
 padding:30px;
 border-radius:12px;
-
 }
-
 
 h1{
 margin-bottom:10px;
@@ -38,41 +36,23 @@ transition:all 0.3s ease;
 button:hover{
 background:#5a67d8;
 transform:scale(1.05);
-
 }
 
-.game-board{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:15px;
-width:360px;
-margin-top:20px;
-}
 .game-board{
 display:grid;
 grid-template-columns:repeat(4,1fr);
 gap:12px;
-width:90%;
-max-width:420px;
+width:400px;
 margin-top:20px;
 }
 
 .card{
-height:80px;
-position:relative;
-transform-style:preserve-3d;
-transition:transform 0.6s;
-cursor:pointer;
-}
-.card{
 aspect-ratio:1/1;
-width:100%;
 position:relative;
 transform-style:preserve-3d;
 transition:transform 0.5s;
 cursor:pointer;
 }
-
 
 .card.flip{
 transform:rotateY(180deg);
@@ -87,13 +67,14 @@ border-radius:10px;
 display:flex;
 justify-content:center;
 align-items:center;
-font-size:28px;
+font-size:26px;
 color:white;
 backface-visibility:hidden;
+pointer-events:none;
 }
 
 .front{
-  background-color: #667eea;
+background:#667eea;
 }
 
 .back{
@@ -101,13 +82,13 @@ background:linear-gradient(135deg,#ff9966,#ff5e62);
 transform:rotateY(180deg);
 }
 
-.card:hover{
-transform:scale(1.05);
-}
+
+
 @media (max-width:500px){
 
 .game-board{
-grid-template-columns:repeat(2,1fr);
+grid-template-columns:repeat(3,1fr);
+width:90%;
 }
 
 }
